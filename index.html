@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Movies</title>
+
+  <!-- Bootstrap-->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <div class="container">
+      <div class="navbar navbar-light bg-light text-center">
+        <h1 class="navbar-brand mb-0 h1"><strong>Movies GIF</strong></h1>
+      </div>
+  <hr>
+    <!-- buttons -->
+    <div id="buttons">
+     <button data-search="Fight Club">Fight Club</button>
+     <button data-search="The Notebook">The Notebook</button>
+     <button data-search="Life is beautiful">Life is beautiful</button>
+     <button data-search="The Godfather">The Godfather</button>
+     <button data-search="Pulp Fiction">Pulp Fiction</button>
+     <button data-search="13 Going on 30">13 Going on 30</button>
+     <button data-search="Sex and the City">Sex and the City</button>
+    </div>
+     <!-- <div class="main"> -->
+      <div class="card float-sm-right" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="gifInput"><strong>Enter A GIF</strong></h5>
+            <input type="text" class="form-control" id="gifInput" placeholder="Enter a gif name!">
+            <button type="submit" id='submitGif' class="btn btn-primary">Submit</button>
+          </div>
+        </div>
+    <!-- </div> -->
+    <div id="GIFArea"></div>
+  <!-- ajax -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+    var x;
+          // On click of form button
+          $(document).on('click','#submitGif',function(){
+            event.preventDefault();
+         x = $('#gifInput').val().trim();
+        console.log(x);
+        $('<button>').text(x).attr('data-search',x).appendTo('#buttons');
+      });
+      
+      $(document).on('click','button', function(){
+          var x = $(this).data("search");
+          console.log(x)
+          var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + x + "&api_key=dc6zaTOxFJmzC&limit=10";
+          console.log(queryURL); 
+       
+        // $('#gifInput').val()
+      $.ajax({
+        url:queryURL,
+        method:'GET'
+        }).done(function(response){
+            console.log(response);
+            var results = response.data;
+            for(var i=0;i< results.length;i++){
+            var movieDiv = $("<div>");
+            var movieImage = $("<img>");
+            movieImage.attr("src", results[i].images.fixed_height_still.url);
+            movieImage.attr('data-animate', results[i].images.fixed_height.url)
+            movieImage.attr('data-still', results[i].images.fixed_height_still.url)
+            movieImage.attr('data-state', 'still');
+
+            var rating = $("<p>");
+            rating.text("Rating: " +results[i].rating);
+
+            movieDiv.append(movieImage,rating);
+            $("#GIFArea").prepend (movieDiv);
+            }
+            // $(document).on('click','#movieImage', function())   
+           
+  })
+
+  })
+  $('#GIFArea').on( 'click', 'img', function () {
+    console.log("click")
+    console.log($(this).attr("src"))
+    var 
+    });
+</script>
+
+</body>
+</html>
