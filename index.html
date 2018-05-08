@@ -12,19 +12,19 @@
 </head>
 <body>
     <div class="container">
-      <div class="navbar navbar-light bg-light text-center">
+      <div class="navbar navbar-light  text-center" style="background-color: rgb(255, 251, 0)">
         <h1 class="navbar-brand mb-0 h1"><strong>Movies GIF</strong></h1>
       </div>
   <hr>
     <!-- buttons -->
     <div id="buttons">
-     <button data-search="Fight Club">Fight Club</button>
-     <button data-search="The Notebook">The Notebook</button>
-     <button data-search="Life is beautiful">Life is beautiful</button>
-     <button data-search="The Godfather">The Godfather</button>
-     <button data-search="Pulp Fiction">Pulp Fiction</button>
-     <button data-search="13 Going on 30">13 Going on 30</button>
-     <button data-search="Sex and the City">Sex and the City</button>
+     <button class="btn" data-search="Fight Club">Fight Club</button>
+     <button class="btn" data-search="The Notebook">The Notebook</button>
+     <button class="btn" data-search="Life is beautiful">Life is beautiful</button>
+     <button class="btn" data-search="The Godfather">The Godfather</button>
+     <button class="btn" data-search="Pulp Fiction">Pulp Fiction</button>
+     <button class="btn" data-search="13 Going on 30">13 Going on 30</button>
+     <button class="btn" data-search="Sex and the City">Sex and the City</button>
     </div>
      <!-- <div class="main"> -->
       <div class="card float-sm-right" style="width: 18rem;">
@@ -45,7 +45,7 @@
             event.preventDefault();
          x = $('#gifInput').val().trim();
         console.log(x);
-        $('<button>').text(x).attr('data-search',x).appendTo('#buttons');
+        $('<button>').text(x).addClass('btn').attr('data-search',x).appendTo('#buttons');
       });
       
       $(document).on('click','button', function(){
@@ -83,7 +83,19 @@
   $('#GIFArea').on( 'click', 'img', function () {
     console.log("click")
     console.log($(this).attr("src"))
-    var 
+    // var animate = this.data('animate');
+    // var still = this.data('still');
+    var state = $(this).attr("data-state");
+
+      if (state === "still") {
+        $(this).attr("src", $(this).attr("data-animate"));
+        $(this).attr("data-state", "animate");
+      } else {
+        $(this).attr("src", $(this).attr("data-still"));
+        $(this).attr("data-state", "still");
+
+    }
+    
     });
 </script>
 
